@@ -1,6 +1,6 @@
 import struct
 import math
-
+import sys 
 from pad import write_command
 
 def read_ulonglong_le(f):
@@ -12,8 +12,10 @@ def read_uint32_le(f):
 def read_ubyte_le(f):
      return struct.unpack("B", f.read(1))[0]
      
+inputpath = sys.argv[1]
+outputpath = inputpath+".txt"
 
-with open("newshadowtest.dtm", "rb") as f:
+with open(inputpath, "rb") as f:
     f.seek(0xA)
     is_wiigame = read_ubyte_le(f)
     
@@ -79,7 +81,7 @@ with open("newshadowtest.dtm", "rb") as f:
         Lpressure.append(l_pressure)
         Rpressure.append(r_pressure)
     
-    with open("newshadowtest.dtm.txt", "w") as g:
+    with open(outputpath, "w") as g:
         for valueslist, valuetype in (
             (analogstick_magnitude, "analog_magnitude"),
             (analogstick_direction, "analog_direction"),
